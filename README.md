@@ -217,13 +217,19 @@ forever/
 ```
 
 
-### Future Enhancements
- Payment Gateway Integration (Stripe/Razorpay)
- Email Notifications
- Product Reviews & Ratings
- Multiple Payment Options
- Discount Coupons
- Social Media Login
+---
+
+## 🔮 Future Enhancements
+
+- [ ] Payment Gateway Integration (Stripe/Razorpay)
+- [ ] Email Notifications
+- [ ] Product Reviews & Ratings
+- [ ] Multiple Payment Options
+- [ ] Order Tracking System
+- [ ] Discount Coupons
+- [ ] Social Media Login
+
+---
 
 ### 🤝 Contributing
 Contributions are welcome! Feel free to open issues and pull requests.
