@@ -171,47 +171,91 @@ Backend:  http://localhost:5000
 ### 📁 Folder Structure
 
 ```text
+
 forever/
+│
 ├── 📂 frontend/
 │   ├── 📂 src/
 │   │   ├── 📂 assets/
 │   │   ├── 📂 components/
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── Footer.jsx
-│   │   │   ├── ProductItem.jsx
-│   │   │   ├── LatestCollection.jsx
 │   │   │   ├── BestSeller.jsx
+│   │   │   ├── CartTotal.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── Hero.jsx
+│   │   │   ├── LatestCollection.jsx
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── NewsLetterBox.jsx
+│   │   │   ├── OurPolicy.jsx
+│   │   │   ├── ProductItem.jsx
+│   │   │   ├── RelatedProducts.jsx
 │   │   │   ├── SearchBar.jsx
-│   │   │   └── NewsLetterBox.jsx
+│   │   │   └── Title.jsx
 │   │   ├── 📂 pages/
-│   │   │   ├── Home.jsx
-│   │   │   ├── Collection.jsx
-│   │   │   ├── Product.jsx
-│   │   │   ├── Cart.jsx
-│   │   │   ├── Login.jsx
-│   │   │   ├── PlaceOrder.jsx
-│   │   │   ├── Orders.jsx
 │   │   │   ├── About.jsx
-│   │   │   └── Contact.jsx
+│   │   │   ├── Cart.jsx
+│   │   │   ├── Collection.jsx
+│   │   │   ├── Contact.jsx
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Orders.jsx
+│   │   │   ├── PlaceOrder.jsx
+│   │   │   └── Product.jsx
 │   │   ├── 📂 context/
 │   │   │   └── ShopContext.jsx
-│   │   └── App.jsx
-│   └── package.json
-│
-├── 📂 backend/
-│   ├── 📂 models/
-│   ├── 📂 routes/
-│   ├── 📂 controllers/
-│   ├── 📂 middleware/
-│   ├── server.js
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── .env
+│   ├── .gitignore
+│   ├── vercel.json
 │   └── package.json
 │
 ├── 📂 admin/
 │   ├── 📂 src/
 │   │   ├── 📂 components/
+│   │   │   ├── Login.jsx
+│   │   │   ├── Navbar.jsx
+│   │   │   └── Sidebar.jsx
 │   │   ├── 📂 pages/
-│   │   └── App.jsx
+│   │   │   ├── Add.jsx
+│   │   │   ├── List.jsx
+│   │   │   └── Orders.jsx
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── .env
+│   ├── .gitignore
+│   ├── vercel.json
 │   └── package.json
+│
+├── 📂 backend/
+│   ├── 📂 config/
+│   │   ├── cloudinary.js
+│   │   └── mongodb.js
+│   ├── 📂 controllers/
+│   │   ├── cartController.js
+│   │   ├── orderController.js
+│   │   ├── productController.js
+│   │   └── userController.js
+│   ├── 📂 middleware/
+│   │   ├── adminAuth.js
+│   │   ├── auth.js
+│   │   └── multer.js
+│   ├── 📂 models/
+│   │   ├── orderModel.js
+│   │   ├── productModel.js
+│   │   └── userModel.js
+│   ├── 📂 routes/
+│   │   ├── cartRoute.js
+│   │   ├── orderRoute.js
+│   │   ├── productRoute.js
+│   │   └── userRoute.js
+│   ├── server.js
+│   ├── .env
+│   ├── .gitignore
+│   ├── vercel.json
+│   ├── package.json
+│   └── package-lock.json
 │
 └── README.md
 ```
