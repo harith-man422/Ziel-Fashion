@@ -7,8 +7,6 @@
 A modern **full-stack e-commerce clothing website** built with **React**, **Node.js**, **Express**, **MongoDB**, and **Tailwind CSS**. Complete **online shopping platform** with user authentication, shopping cart, product filtering, and admin dashboard.
 
 [![Live Demo](https://img.shields.io/badge/🔗_Live_Demo-Visit_Site-success?style=for-the-badge)](https://forever-frontend-tau-sooty.vercel.app/)
-[![GitHub](https://img.shields.io/badge/GitHub-ARQUM21-181717?style=for-the-badge&logo=github)](https://github.com/ARQUM21)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/muhammadarqumtariq/)
 
 </div>
 
@@ -59,11 +57,6 @@ A modern **full-stack e-commerce clothing website** built with **React**, **Node
 
 ---
 
-## 🚀 Live Demo
-
-🔗 **[Visit Forever Store](https://forever-frontend-tau-sooty.vercel.app/)**
-
----
 
 ## 📸 Screenshots
 
@@ -269,9 +262,8 @@ forever/
 - [ ] Email Notifications
 - [ ] Product Reviews & Ratings
 - [ ] Multiple Payment Options
-- [ ] Order Tracking System
 - [ ] Discount Coupons
-- [ ] Social Media Login
+
 
 ---
 
