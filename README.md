@@ -61,25 +61,25 @@ A modern **full-stack e-commerce clothing website** built with **React**, **Node
 ## 📸 Screenshots
 
 ### 🏠 Homepage
-![Homepage](./screenshots/homepage.png)
+![Homepage](./screenshots/homepage.PNG)
 
 ### 🛍️ Product Collection
 ![Collection](./screenshots/collection.png)
 
 ### 📄 Product Details
-![Product Details](./screenshots/product-details.png)
+![Product Details](./screenshots/product-details.PNG)
 
 ### 🛒 Shopping Cart
-![Cart](./screenshots/cart.png)
+![Cart](./screenshots/cart.PNG)
 
 ### 👤 User Login
-![Login](./screenshots/login.png)
+![Login](./screenshots/login.PNG)
 
 ### 📦 Place Order
-![Place Order](./screenshots/place-order.png)
+![Place Order](./screenshots/place-order.PNG)
 
 ### 👨‍💼 Admin Dashboard
-![Admin Dashboard](./screenshots/admin-dashboard.png)
+![Admin Dashboard](./screenshots/admin-panel.png)
 
 ---
 
