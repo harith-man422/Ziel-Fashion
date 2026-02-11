@@ -78,15 +78,14 @@ A modern **full-stack e-commerce clothing website** built with **React**, **Node
 ### 📦 Place Order
 ![Place Order](./screenshots/place-order.PNG)
 
-### 👨‍💼 Admin Dashboard
-![Admin Dashboard](./screenshots/admin-panel.png)
-
-### 📋 Orders Page (Admin)
-![Orders](./screenshots/orders.PNG)
+### ➕ Add Product (Admin)
+![Add Product](./screenshots/addproduct.PNG)
 
 ### 📝 Product List (Admin)
 ![Product List](./screenshots/listitem.PNG)
 
+### 📋 Orders Page (Admin)
+![Orders](./screenshots/orders.PNG)
 
 ---
 
