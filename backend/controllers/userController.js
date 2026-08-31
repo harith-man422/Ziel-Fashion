@@ -1,8 +1,18 @@
 import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 import userModel from "../models/userModel.js";
 
+const smtpPassword = (process.env.SMTP_PASSWORD || '').replace(/\s+/g, '');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.SMTP_EMAIL,
+    pass: smtpPassword,
+  },
+});
 
 const createToken = (id) => {
   return jwt.sign({id}, process.env.JWT_SECRET)
@@ -96,6 +106,48 @@ const adminLogin = async (req,res) => {
   }
 }
 
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body || {};
 
+    if (!email || !email.trim()) {
+      return res.json({ success: false, message: 'Please enter your email address' });
+    }
 
-export { loginUser, registerUser, adminLogin }
+    const cleanEmail = email.trim().toLowerCase();
+    const user = await userModel.findOne({ email: cleanEmail });
+
+    if (!user) {
+      return res.json({ success: false, message: 'No account found with this email' });
+    }
+
+    if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
+      return res.json({
+        success: false,
+        message: 'Email sending is not configured. Add SMTP_EMAIL and SMTP_PASSWORD in the backend .env file.',
+      });
+    }
+
+    const temporaryPassword = Math.random().toString(36).slice(2, 10) + Math.random().toString(36).slice(2, 6) + '!';
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(temporaryPassword, salt);
+    await user.save();
+
+    await transporter.sendMail({
+      from: process.env.SMTP_EMAIL,
+      to: user.email,
+      subject: 'Your Forever Store Temporary Password',
+      text: `Your temporary password is: ${temporaryPassword}\n\nPlease login and change it immediately after signing in.`,
+    });
+
+    return res.json({
+      success: true,
+      message: 'A temporary password has been sent to your email address.',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export { loginUser, registerUser, adminLogin, forgotPassword }

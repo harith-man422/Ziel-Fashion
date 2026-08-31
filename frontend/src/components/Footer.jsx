@@ -17,7 +17,7 @@ const Footer = () => {
         <div>
           <img src={assets.logo} alt="" className='mb-5 w-32'/>
             <p className='w-full md:w-2/3 text-gray-600'>
-              Forever – Your ultimate destination for trendy and affordable shopping. 
+              Ziel – Your ultimate destination for trendy and affordable shopping. 
               We bring you the best quality products with a seamless online experience, 
               because great style should last forever.
             </p>
@@ -53,8 +53,8 @@ const Footer = () => {
         <div>
             <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
             <ul className='flex flex-col gap-1 text-gray-600'>
-                <li>Phone: +92 3432705821</li>
-                <li>Email: marqum029@gmail.com</li>
+                <li>Phone: +94 344567778</li>
+                <li>Email: zielclothing@gmail.com</li>
             </ul>
         </div>
 
@@ -63,7 +63,7 @@ const Footer = () => {
       <div>
         <hr />
         <p className='py-5 text-sm text-center'>
-          Copyright 2026@ forever.com - All Rights Reserved
+          Copyright 2026@ zielclothing.com - All Rights Reserved
         </p>    
       </div> 
 
