@@ -18,7 +18,7 @@ const LatestCollection = () => {
     <div className='my-10'>
       <div className='text-center py-8 text-3xl'>
         <Title  text1={'LATEST'} text2={'COLLECTION'} />
-        <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base  text-gray-600'>Ecommerce or "electronic commerce" is the trading of goods and services online. The internet allows individuals and businesses to buy and sell an increasing amount of physical goods, digital goods, and services electronically.</p>     
+        <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base  text-gray-600'>Discover the latest collection from Ziel, where modern style meets effortless comfort. Carefully designed with contemporary trends, quality fabrics, and versatile details, our newest pieces are made to elevate your everyday wardrobe. From timeless essentials to standout styles, explore fresh looks that reflect your individuality and keep you confidently ahead of the season.</p>     
       </div>
       
       {/* Rendering products */}

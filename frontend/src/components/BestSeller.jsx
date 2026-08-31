@@ -19,7 +19,7 @@ const BestSeller = () => {
       <div className='text-center text-3xl py-8'>
          <Title text1={'BEST'} text2={'SELLERS'}/>
          <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
-         Ecommerce or "electronic commerce" is the trading of goods and services online. The internet allows individuals and businesses to buy and sell an increasing amount of physical goods, digital goods, and services electronically.
+         Explore the styles our customers love the most. Ziel’s best sellers bring together effortless fashion, everyday comfort, and timeless appeal, making them perfect for any occasion. From must-have wardrobe essentials to standout favorites, discover the pieces that continue to be chosen, worn, and loved by our community.
          </p>
       </div> 
 

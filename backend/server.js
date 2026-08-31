@@ -7,6 +7,7 @@ import userRouter from './routes/userRoute.js'
 import productRouter from './routes/productRoute.js'
 import cartRouter from './routes/cartRoute.js'
 import orderRouter from './routes/orderRoute.js'
+import Stripe from 'stripe'
 
 // App Config
 
@@ -14,6 +15,9 @@ const app = express()
 const Port = process.env.PORT || 4000
 connnectDB()
 connectCloudinary()
+
+// Stripe Config
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 // Middleware
 app.use(express.json())
