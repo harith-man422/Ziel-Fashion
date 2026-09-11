@@ -1,5 +1,6 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
+import productModel from "../models/productModel.js";
 import { stripe } from "../server.js";
 
 // Placing orders using COD Method
@@ -7,6 +8,9 @@ import { stripe } from "../server.js";
 const placeOrder = async (req,res) => {
   try {
    const{ userId, items, amount, address} = req.body;
+  if (!Array.isArray(items) || items.length === 0) {
+   return res.json({ success: false, message: 'Your cart is empty' });
+  }
 
    const orderData = {
     userId,
@@ -14,7 +18,7 @@ const placeOrder = async (req,res) => {
     address,
     amount,
     paymentMethod: 'Cash On Delivery',
-    payment: 'false',
+    payment: false,
     date: Date.now()
    }
     const newOrder = new orderModel(orderData)
@@ -84,8 +88,7 @@ const stripePaymentIntent = async (req, res) => {
       currency: 'usd',
       metadata: {
         userId,
-        items: JSON.stringify(items),
-        address: JSON.stringify(address),
+        amount: String(amount),
       },
     });
 
@@ -105,6 +108,15 @@ const createStripeSession = async (req, res) => {
   try {
     const { items, amount, address } = req.body;
     const { userId } = req;
+    if (!Array.isArray(items) || items.length === 0) {
+      return res.json({ success: false, message: 'Your cart is empty' });
+    }
+    const frontendUrl = process.env.FRONTEND_URL || req.headers.origin || 'http://localhost:5173';
+    const compactItems = items.map(({ _id, size, quantity }) => ({
+      productId: _id,
+      size,
+      quantity,
+    }));
 
     // Format line items for Stripe
     const lineItems = items.map(item => ({
@@ -135,13 +147,13 @@ const createStripeSession = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/orders?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/order`,
+      success_url: `${frontendUrl}/orders?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${frontendUrl}/cart`,
       metadata: {
         userId,
-        items: JSON.stringify(items),
+        items: JSON.stringify(compactItems),
         address: JSON.stringify(address),
-        amount,
+        amount: String(amount),
       },
     });
 
@@ -192,5 +204,58 @@ const verifyStripePayment = async (req, res) => {
   }
 };
 
+// Verify a hosted Stripe Checkout session and create its order once.
+const verifyStripeSession = async (req, res) => {
+  try {
+    const { sessionId } = req.body;
+    const { userId } = req;
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-export {placeOrder, allOrders, userOrders, updateStatus, stripePaymentIntent, verifyStripePayment, createStripeSession}
+    if (session.payment_status !== 'paid' || session.metadata.userId !== userId) {
+      return res.json({ success: false, message: 'Payment has not been completed' });
+    }
+
+    const paymentId = String(session.payment_intent);
+    const existingOrder = await orderModel.findOne({ paymentId });
+    if (!existingOrder) {
+      const storedItems = JSON.parse(session.metadata.items);
+      const compactItems = storedItems.map((item) => ({
+        productId: item.productId || item._id,
+        size: item.size,
+        quantity: item.quantity,
+        product: item.productId || item._id ? null : item,
+      }));
+      const products = await productModel.find({
+        _id: { $in: compactItems.filter((item) => item.productId).map((item) => item.productId) },
+      });
+      const items = compactItems.map((item) => {
+        const product = item.product || products.find((entry) => String(entry._id) === item.productId);
+        return {
+          ...(product.toObject ? product.toObject() : product),
+          size: item.size,
+          quantity: item.quantity,
+        };
+      });
+
+      await orderModel.create({
+        userId,
+        items,
+        address: JSON.parse(session.metadata.address),
+        amount: Number(session.metadata.amount),
+        paymentMethod: 'Stripe',
+        payment: true,
+        paymentId,
+        date: Date.now(),
+      });
+      await userModel.findByIdAndUpdate(userId, { cartData: {} });
+    }
+
+    res.json({ success: true, message: 'Payment verified and order placed' });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+
+export {placeOrder, allOrders, userOrders, updateStatus, stripePaymentIntent, verifyStripePayment, verifyStripeSession, createStripeSession}

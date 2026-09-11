@@ -1,5 +1,5 @@
 import express from 'express'
-import {placeOrder, allOrders, userOrders, updateStatus, stripePaymentIntent, verifyStripePayment, createStripeSession} from '../controllers/orderController.js'
+import {placeOrder, allOrders, userOrders, updateStatus, stripePaymentIntent, verifyStripePayment, verifyStripeSession, createStripeSession} from '../controllers/orderController.js'
 import adminAuth from '../middleware/adminAuth.js'
 import authUser from '../middleware/auth.js'
 
@@ -15,6 +15,7 @@ orderRouter.post('/status',adminAuth, updateStatus)
 orderRouter.post('/place',authUser, placeOrder)
 orderRouter.post('/stripe-intent', authUser, stripePaymentIntent)
 orderRouter.post('/verify-stripe', authUser, verifyStripePayment)
+orderRouter.post('/verify-stripe-session', authUser, verifyStripeSession)
 orderRouter.post('/create-stripe-session', authUser, createStripeSession)
 
 

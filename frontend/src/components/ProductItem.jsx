@@ -10,7 +10,7 @@ const ProductItem = ({id, image, name, price}) => {
     if (typeof image === 'string') {
       try {
         imageUrl = JSON.parse(image);
-      } catch (e) {
+      } catch {
         imageUrl = [image];
       }
     }

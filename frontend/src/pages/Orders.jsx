@@ -2,28 +2,43 @@ import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext';
 import Title from '../components/Title';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useSearchParams } from 'react-router-dom';
 
 const Orders = () => {
 
   const { backendUrl, token, currency } = useContext(ShopContext);
   const [orderData, setOrderData] = useState([])
+  const [searchParams] = useSearchParams();
 
   const loadOrderData = async () => {
     try {
       if(!token) {
         return null
       }
+
+      const sessionId = searchParams.get('session_id');
+      if (sessionId) {
+        const response = await axios.post(
+          backendUrl + '/api/order/verify-stripe-session',
+          { sessionId },
+          { headers: { token } },
+        );
+        if (!response.data.success) {
+          toast.error(response.data.message);
+        }
+      }
    
       const response = await axios.post(backendUrl + '/api/order/userorders', {}, {headers: {token}})
       if(response.data.success){
         let allOrderItem = []
         response.data.orders.map((order) => {
-         order.items.map((item) => {
+         (order.items.length ? order.items : [{}]).map((item) => {
             item['status'] = order.status
             item['payment'] = order.payment
             item['paymentMethod'] = order.paymentMethod
             item['date'] = order.date
-            allOrderItem.push(item)
+            allOrderItem.push({ ...item, orderId: order._id, amount: order.amount, address: order.address })
          })
         })
         setOrderData(allOrderItem.reverse());
@@ -31,13 +46,13 @@ const Orders = () => {
       }
 
     } catch (error) {
-      
+      toast.error(error.response?.data?.message || error.message)
     }
   }
 
   useEffect(() => {
       loadOrderData()
-  },[token])
+  },[token, searchParams, backendUrl])
 
 
   return (
@@ -51,13 +66,12 @@ const Orders = () => {
           orderData.map((item,index) => (
             <div key={index} className='py-4 border-t border-b text-gray-700 flex flex-col  md:flex-row  md:items-center  md:justify-between gap-4 ' >
              <div className='flex items-start gap-6 text-sm' >
-              <img className='w-16 sm:w-20' src={item.image[0]} alt="" />
+              {item.image?.[0] ? <img className='w-16 sm:w-20' src={item.image[0]} alt="" /> : <div className='w-16 sm:w-20' />}
               <div>
-                <p className='sm:text-base font-medium'>{item.name}</p>
+                <p className='sm:text-base font-medium'>{item.name || 'Order'}</p>
                   <div className='flex items-center gap-3 mt-1 text-base text-gray-700' >
-                    <p>{currency}{item.price}</p>
-                    <p>Quantity: {item.quantity}</p>
-                    <p>Size: {item.size}</p>        
+                    <p>{item.price ? `${currency}${item.price}` : `${currency}${item.amount}`}</p>
+                    {item.name && <><p>Quantity: {item.quantity}</p><p>Size: {item.size}</p></>}
                   </div>
                      <p className='mt-1' >Date: <span className='text-gray-400'>{new Date(item.date).toDateString()}</span></p>
                      <p className='mt-1' >Payment: <span className='text-gray-400'>{item.paymentMethod}</span></p>

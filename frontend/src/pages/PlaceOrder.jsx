@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import Title from '../components/Title'
 import CartTotal from '../components/CartTotal'
 import { ShopContext } from '../context/ShopContext'
@@ -36,7 +36,7 @@ const PlaceOrder = () => {
     if (typeof image === 'string') {
       try {
         image = JSON.parse(image);
-      } catch (e) {
+      } catch {
         return image; // Return as is if not valid JSON
       }
     }
@@ -129,6 +129,7 @@ const PlaceOrder = () => {
 
       switch (method) {
         case 'Cash On Delivery':
+          {
           const response = await axios.post(backendUrl + '/api/order/place', orderData, { headers: { token } })
           if (response.data.success) {
             setCartItems({})
@@ -137,6 +138,7 @@ const PlaceOrder = () => {
             toast.error(response.data.message)
           }
           break
+          }
 
         default:
           break

@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
-import { toast } from 'react-toastify';
 
 const Product = () => {
 
@@ -23,7 +22,7 @@ const Product = () => {
           // If image is a string (JSON stringified), parse it
           try {
             imageArray = JSON.parse(imageArray);
-          } catch (e) {
+          } catch {
             imageArray = [imageArray];
           }
         }
@@ -55,7 +54,7 @@ const Product = () => {
               if (typeof imageArray === 'string') {
                 try {
                   imageArray = JSON.parse(imageArray);
-                } catch (e) {
+                } catch {
                   imageArray = [imageArray];
                 }
               }
